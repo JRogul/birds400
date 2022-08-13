@@ -15,7 +15,7 @@ def imshow(inp, title=None):
     if title is not None:
         plt.title(title)
     plt.pause(0.001)
-
+    plt.show()
 def visualize_model(model, dataloader, classes, num_images=4):
     was_training = model.training
     model.eval()

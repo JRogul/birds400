@@ -25,3 +25,6 @@ if __name__ ==  '__main__':
     from src import visualization
     import warnings
 
+    model = torch.load('models/model01')
+    model = model.to(config.DEVICE)
+    visualization.visualize_model(model, data_preparation.test_dataloader, data_preparation.bird_classes)
