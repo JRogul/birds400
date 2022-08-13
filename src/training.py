@@ -1,7 +1,11 @@
 import torch
+
 from tqdm import tqdm
 from src import config
 from src import data_preparation
+
+import tqdm
+from src import config
 
 def train_model(model, dataloaders, criterion, optimizer, num_epochs, num_model):
     early_stopping = 0
