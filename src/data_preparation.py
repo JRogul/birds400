@@ -37,3 +37,11 @@ dataloaders = {
                   num_workers=4) for x in ['train', 'test']
 
 }
+
+test_dataset = datasets.ImageFolder(root=config.TEST_DIR,
+                                   transform=transformations_test)
+
+test_dataloader = DataLoader(test_dataset,
+                            batch_size=32,
+                            shuffle=False
+                            )

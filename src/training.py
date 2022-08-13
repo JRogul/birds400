@@ -58,4 +58,3 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs, num_model)
     torch.save(model, 'model_trained_0{}'.format(num_model))
     return model
 
-
