@@ -1,7 +1,8 @@
 import pandas as pd
+from torch.utils.data import DataLoader
 from torchvision import transforms, datasets
 from src import config
-from torch.utils.data import DataLoader
+
 
 birds = pd.read_csv('data/birds.csv')
 birds_class = pd.read_csv('data/class_dict.csv')
