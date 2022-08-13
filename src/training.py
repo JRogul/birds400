@@ -58,3 +58,24 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs, num_model)
     torch.save(model, 'model_trained_0{}'.format(num_model))
     return model
 
+
+def test_loop(model, dataloader, criterion):
+    predictions = []
+    model.eval()
+    running_acc = 0.0
+    step = 0
+    bar = tqdm(dataloader, total=len(dataloader))
+
+    for images, labels in bar:
+        images = images.to(config.DEVICE)
+        labels = labels.to(config.DEVICE)
+
+        outputs = model(images)
+
+        _, preds = torch.max(outputs, 1)
+    predictions.extend(preds.cpu().detach().numpy())
+    step += 1
+    running_acc += torch.sum(preds == labels)
+
+    bar.set_postfix(Stage='Training', train_acc='{:.1%}'.format(running_acc / (step * 32)))
+
