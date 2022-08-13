@@ -2,11 +2,6 @@ import pandas as pd
 from torch.utils.data import DataLoader
 from torchvision import transforms, datasets
 from src import config
-<<<<<<< HEAD
-=======
-
->>>>>>> 542dd68 (added training loop)
-
 
 birds = pd.read_csv(config.BIRDS_DIR)
 birds_class = pd.read_csv(config.BIRDS_CLASS_DIR)
