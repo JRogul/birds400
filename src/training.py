@@ -1,7 +1,7 @@
 import torch
-import tqdm
+from tqdm import tqdm
 from src import config
-
+from src import data_preparation
 
 def train_model(model, dataloaders, criterion, optimizer, num_epochs, num_model):
     early_stopping = 0
@@ -21,7 +21,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs, num_model)
             running_loss = 0.0
             running_acc = 0
 
-            for images, labels in tqdm(dataloaders[phase]):
+            for images, labels in tqdm(data_preparation.dataloaders[phase]):
                 images = images.to(config.DEVICE)
                 labels = labels.to(config.DEVICE)
 
@@ -50,9 +50,12 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs, num_model)
 
                 elif early_loss > epoch_loss:
                     early_stopping = 0
-                    if epoch > 30:
-                        torch.save(model, 'model_trained_0{}_{}'.format(num_model, epoch))
+                    early_loss = epoch_loss
+
+
 
             print('{} Loss: {:.3f} Acc: {:.3f}'.format(phase, epoch_loss, epoch_acc))
-            # early_loss = epoch_loss
+    torch.save(model, 'model_trained_0{}'.format(num_model))
     return model
+
+

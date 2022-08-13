@@ -4,8 +4,8 @@ from torchvision import transforms, datasets
 from src import config
 
 
-birds = pd.read_csv('data/birds.csv')
-birds_class = pd.read_csv('data/class_dict.csv')
+birds = pd.read_csv(config.BIRDS_DIR)
+birds_class = pd.read_csv(config.BIRDS_CLASS_DIR)
 
 
 bird_classes = pd.DataFrame({'index': birds_class['class_index'],
@@ -34,6 +34,6 @@ dataloaders = {
     x: DataLoader(dataset[x],
                   batch_size=64,
                   shuffle=True,
-                  num_workers=2) for x in ['train', 'test']
+                  num_workers=4) for x in ['train', 'test']
 
 }
