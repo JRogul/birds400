@@ -6,9 +6,8 @@ from src import config
 birds = pd.read_csv(config.BIRDS_DIR)
 birds_class = pd.read_csv(config.BIRDS_CLASS_DIR)
 
-
 bird_classes = pd.DataFrame({'index': birds_class['class_index'],
-                            'class': birds_class['class']})
+                             'class': birds_class['class']})
 
 transformations_train = transforms.Compose([
     transforms.ToTensor(),
@@ -32,15 +31,15 @@ dataset = {
 dataloaders = {
     x: DataLoader(dataset[x],
                   batch_size=64,
-                  shuffle=True,
+                  shuffle=False,
                   num_workers=4) for x in ['train', 'test']
 
 }
 
 test_dataset = datasets.ImageFolder(root=config.TEST_DIR,
-                                   transform=transformations_test)
+                                    transform=transformations_test)
 
 test_dataloader = DataLoader(test_dataset,
-                            batch_size=32,
-                            shuffle=False
-                            )
+                             batch_size=32,
+                             shuffle=True
+                             )

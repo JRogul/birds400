@@ -3,9 +3,8 @@ import torch
 from tqdm import tqdm
 from src import config
 from src import data_preparation
-
-import tqdm
 from src import config
+
 
 def train_model(model, dataloaders, criterion, optimizer, num_epochs, num_model):
     early_stopping = 0
@@ -25,7 +24,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs, num_model)
             running_loss = 0.0
             running_acc = 0
 
-            for images, labels in tqdm(data_preparation.dataloaders[phase]):
+            for images, labels in tqdm(dataloaders[phase]):
                 images = images.to(config.DEVICE)
                 labels = labels.to(config.DEVICE)
 
@@ -55,11 +54,8 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs, num_model)
                 elif early_loss > epoch_loss:
                     early_stopping = 0
                     early_loss = epoch_loss
-
-
-
             print('{} Loss: {:.3f} Acc: {:.3f}'.format(phase, epoch_loss, epoch_acc))
-    torch.save(model, 'model_trained_0{}'.format(num_model))
+
     return model
 
 
@@ -73,13 +69,13 @@ def test_loop(model, dataloader, criterion):
     for images, labels in bar:
         images = images.to(config.DEVICE)
         labels = labels.to(config.DEVICE)
-
         outputs = model(images)
 
         _, preds = torch.max(outputs, 1)
-    predictions.extend(preds.cpu().detach().numpy())
-    step += 1
-    running_acc += torch.sum(preds == labels)
+        predictions.extend(preds.cpu().detach().numpy())
+        step += 1
+        running_acc += torch.sum(preds == labels)
 
-    bar.set_postfix(Stage='Training', train_acc='{:.1%}'.format(running_acc / (step * 32)))
-
+        #bar.set_postfix(Stage='Training', train_acc='{:.1%}'.format(running_acc / (step * 32)))
+        if step % 10 == 0:
+            print(running_acc / (step * images.shape[0]))

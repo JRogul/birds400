@@ -30,14 +30,15 @@ def visualize_model(model, dataloader, classes, num_images=4):
             outputs = model(inputs)
             _, preds = torch.max(outputs, 1)
 
-            for j in range(inputs.size()[0]):
+            for j in range(num_images):
                 images_so_far += 1
                 plt.figure(figsize=(10, 10))
                 ax = plt.subplot(num_images // 2, 4, images_so_far)
                 ax.axis('off')
-                ax.set_title(f'predicted: {preds[j].detach().cpu().numpy()}')
+                ax.set_title(f'predicted: {preds[j].detach().cpu().numpy()} \n true label :{labels[j].detach().cpu().numpy()}')
                 print(labels[j].detach().cpu().numpy(),
-                      data_preparation.bird_classes['class'][labels[j].detach().cpu().numpy()])
+                    data_preparation.bird_classes['class'][labels[j].detach().cpu().numpy()])
+
                 imshow(inputs.cpu().data[j])
 
                 if images_so_far == num_images:
