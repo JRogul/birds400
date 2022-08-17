@@ -41,5 +41,5 @@ test_dataset = datasets.ImageFolder(root=config.TEST_DIR,
 
 test_dataloader = DataLoader(test_dataset,
                              batch_size=32,
-                             shuffle=True
+                             shuffle=False
                              )

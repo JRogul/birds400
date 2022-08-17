@@ -79,3 +79,4 @@ def test_loop(model, dataloader, criterion):
         #bar.set_postfix(Stage='Training', train_acc='{:.1%}'.format(running_acc / (step * 32)))
         if step % 10 == 0:
             print(running_acc / (step * images.shape[0]))
+    return predictions

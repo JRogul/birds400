@@ -1,0 +1,5 @@
+model,accuracy
+densenet,0.974
+resnet34,0.941
+vgg16,0.93
+ensambled_models,0.974
