@@ -9,6 +9,7 @@ birds_class = pd.read_csv(config.BIRDS_CLASS_DIR)
 bird_classes = pd.DataFrame({'index': birds_class['class_index'],
                              'class': birds_class['class']})
 
+#transforms for data augmentation
 transformations_train = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406],
@@ -22,7 +23,7 @@ transformations_test = transforms.Compose([
     transforms.Normalize(mean=[0.485, 0.456, 0.406],
                          std=[0.229, 0.224, 0.225])
 ])
-
+#load data with labels from files
 dataset = {
     'train': datasets.ImageFolder(root=config.TRAIN_DIR, transform=transformations_train),
     'test': datasets.ImageFolder(root=config.VAL_DIR, transform=transformations_test)

@@ -1,11 +1,11 @@
 import torch
-
 from tqdm import tqdm
 from src import config
 from src import data_preparation
 from src import config
 
-
+#basic loop in pytorch
+#used booth for training and evaluating model
 def train_model(model, dataloaders, criterion, optimizer, num_epochs, num_model):
     early_stopping = 0
     early_loss = 3000
@@ -20,7 +20,6 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs, num_model)
                 model.train()
             else:
                 model.eval()
-
             running_loss = 0.0
             running_acc = 0
 
@@ -43,7 +42,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs, num_model)
                 running_acc += torch.sum(preds == labels.data)
             epoch_loss = running_loss / len(dataloaders[phase].dataset)
             epoch_acc = running_acc / len(dataloaders[phase].dataset)
-
+            #early stopping
             if phase == 'test':
                 if early_loss < epoch_loss:
                     early_stopping += 1
@@ -72,11 +71,12 @@ def test_loop(model, dataloader, criterion):
         outputs = model(images)
 
         _, preds = torch.max(outputs, 1)
+        #saving all predictions for ensembling results
         predictions.extend(preds.cpu().detach().numpy())
         step += 1
         running_acc += torch.sum(preds == labels)
 
-        #bar.set_postfix(Stage='Training', train_acc='{:.1%}'.format(running_acc / (step * 32)))
+        bar.set_postfix(Stage='Training', train_acc='{:.1%}'.format(running_acc / (step * 32)))
         if step % 10 == 0:
             print(running_acc / (step * images.shape[0]))
     return predictions
